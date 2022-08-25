@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 require('dotenv/config');
 
 const ads = require('./routes/ads.routes');
+const users = require('./routes/users.routes');
 
 const app = express();
 app.listen(process.env.PORT || 8000, () => {
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/client/build')));
 
 app.use('/api', ads);
+app.use('/api', users);
 
 let uriDB = process.env.DB_URI;
 
@@ -40,11 +42,15 @@ app.use((req, res, next) => {
   next();
 });
 
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(__dirname + '/client/build/index.html'));
+// });
+
 app.use((req, res) => {
-  res.status(404).send({ message: 'Not found...' });
+  res.status(404).json({ message: 'Not found...' });
 });
 
 app.use((err, req, res) => {
   console.log(err);
-  res.status(500).send({ message: err });
+  res.status(500).json({ message: err });
 });
