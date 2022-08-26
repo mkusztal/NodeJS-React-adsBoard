@@ -34,7 +34,7 @@ exports.register = async (req, res) => {
         password: await bcrypt.hash(password, 10),
       });
       await user.save();
-      res.status(201).send({ message: 'User created ' + user.login });
+      res.status(201).json({ message: 'User created ' + user.login });
     } else {
       res.status(400).json({ message: 'Bad request' });
     }
