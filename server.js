@@ -17,20 +17,20 @@ app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running...');
 });
 
-// mongoose.connect(uriDB, {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
+mongoose.connect(uriDB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-// const mongooseConnection = mongoose.connection;
+const mongooseConnection = mongoose.connection;
 
-// mongooseConnection.once('open', () => {
-//   console.log('Connected to the database');
-// });
+mongooseConnection.once('open', () => {
+  console.log('Connected to the database');
+});
 
-// mongooseConnection.on('error', (err) => {
-//   console.log('Error: ', err);
-// });
+mongooseConnection.on('error', (err) => {
+  console.log('Error: ', err);
+});
 
 app.use(cors());
 app.use(express.json());
@@ -39,10 +39,10 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(
   session({
     secret: secretKey,
-    store: new MongoStore({
-      mongoUrl: uriDB,
-      mongooseConnection: mongoose.connection,
-    }),
+    // store: new MongoStore({
+    //   mongoUrl: uriDB,
+    //   mongooseConnection: mongoose.connection,
+    // }),
     resave: false,
     saveUninitialized: false,
     cookie: { secure: true },

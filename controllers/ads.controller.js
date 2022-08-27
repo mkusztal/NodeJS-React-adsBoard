@@ -35,16 +35,20 @@ exports.addAd = async (req, res) => {
   );
 
   try {
-    const newAd = new Ad({
-      title: title,
-      description: description,
-      date: date,
-      photo: photo,
-      price: price,
-      location: location,
-    });
-    await newAd.save();
-    res.json({ message: 'OK' });
+    if (req.user) {
+      const newAd = new Ad({
+        title: title,
+        description: description,
+        date: date,
+        photo: photo,
+        price: price,
+        location: location,
+      });
+      await newAd.save();
+      res.json({ message: 'OK' });
+    } else {
+      res.json({ message: 'No permission' });
+    }
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -54,22 +58,26 @@ exports.updateAdById = async (req, res) => {
   const { title, description, date, photo, price, location } = req.body;
   try {
     const ad = await Ad.findById(req.params.id);
-    if (ad) {
-      await Ad.updateOne(
-        { _id: req.params.id },
-        {
-          $set: {
-            title: title,
-            description: description,
-            date: date,
-            photo: photo,
-            price: price,
-            location: location,
-          },
-        }
-      );
+    if (req.user) {
+      if (ad) {
+        await Ad.updateOne(
+          { _id: req.params.id },
+          {
+            $set: {
+              title: title,
+              description: description,
+              date: date,
+              photo: photo,
+              price: price,
+              location: location,
+            },
+          }
+        );
+      }
+      res.json({ message: 'OK' });
+    } else {
+      res.json({ message: 'No permission' });
     }
-    res.json({ message: 'OK' });
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -78,9 +86,13 @@ exports.updateAdById = async (req, res) => {
 exports.removeAdById = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
-    if (ad) {
-      await Ad.deleteOne({ _id: req.params.id });
-      res.json({ message: 'Ok' });
+    if (req.user) {
+      if (ad) {
+        await Ad.deleteOne({ _id: req.params.id });
+        res.json({ message: 'Ok' });
+      }
+    } else {
+      res.json({ message: 'No permission' });
     }
   } catch (err) {
     res.status(500).json({ message: err });
