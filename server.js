@@ -13,7 +13,7 @@ let uriDB = process.env.DB_URI;
 let secretKey = process.env.EXPRESS_SESSION_SECRET;
 
 const app = express();
-app.listen(process.env.PORT || 8000, () => {
+const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running...');
 });
 
@@ -22,13 +22,18 @@ mongoose.connect(uriDB, {
   useUnifiedTopology: true,
 });
 
-const mongooseConnection = mongoose.connection;
+const store = MongoStore.create({
+  mongoUrl: uriDB,
+  collection: 'sessions',
+});
 
-mongooseConnection.once('open', () => {
+const db = mongoose.connection;
+
+db.once('open', () => {
   console.log('Connected to the database');
 });
 
-mongooseConnection.on('error', (err) => {
+db.on('error', (err) => {
   console.log('Error: ', err);
 });
 
@@ -39,10 +44,7 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(
   session({
     secret: secretKey,
-    // store: new MongoStore({
-    //   mongoUrl: uriDB,
-    //   mongooseConnection: mongoose.connection,
-    // }),
+    store: store,
     resave: false,
     saveUninitialized: false,
     cookie: { secure: true },
@@ -69,3 +71,5 @@ app.use((err, req, res) => {
   console.log(err);
   res.status(500).json({ message: err });
 });
+
+module.exports = server;
