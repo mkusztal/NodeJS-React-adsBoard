@@ -71,3 +71,15 @@ exports.login = async (req, res) => {
     res.status(500).json({ message: err });
   }
 };
+
+exports.getUser = async (req, res) => {
+  try {
+    if (req.session.login) {
+      res.json({ login: req.session.login });
+    } else {
+      res.status(401).json({ message: 'You are not authorized' });
+    }
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};
