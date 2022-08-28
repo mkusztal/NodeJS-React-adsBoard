@@ -40,13 +40,16 @@ exports.addAd = async (req, res) => {
         title: title,
         description: description,
         date: date,
-        photo: photo,
+        image: req.file.fileName,
         price: price,
         location: location,
       });
       await newAd.save();
       res.json({ message: 'OK' });
     } else {
+      if (req.file) {
+        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+      }
       res.json({ message: 'No permission' });
     }
   } catch (err) {
@@ -55,11 +58,27 @@ exports.addAd = async (req, res) => {
 };
 
 exports.updateAdById = async (req, res) => {
-  const { title, description, date, photo, price, location } = req.body;
+  const { title, description, date, photo, price, location, userName } =
+    req.body;
   try {
     const ad = await Ad.findById(req.params.id);
     if (req.user) {
       if (ad) {
+        if (!req.file) {
+          await Ad.updateOne(
+            { _id: req.params.id },
+            {
+              $set: {
+                title: title,
+                description: description,
+                date: date,
+                price: price,
+                location: location,
+                userName: req.user.login,
+              },
+            }
+          );
+        }
         await Ad.updateOne(
           { _id: req.params.id },
           {
@@ -67,15 +86,19 @@ exports.updateAdById = async (req, res) => {
               title: title,
               description: description,
               date: date,
-              photo: photo,
+              image: req.file.fileName,
               price: price,
               location: location,
+              userName: req.user.login,
             },
           }
         );
       }
       res.json({ message: 'OK' });
     } else {
+      if (req.file) {
+        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+      }
       res.json({ message: 'No permission' });
     }
   } catch (err) {
