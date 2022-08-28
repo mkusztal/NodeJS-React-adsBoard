@@ -22,6 +22,11 @@ mongoose.connect(uriDB, {
   useUnifiedTopology: true,
 });
 
+const sessionStore = MongoStore.create({
+  mongoUrl: uriDB,
+  collection: 'sessions',
+});
+
 const db = mongoose.connection;
 
 db.once('open', () => {
@@ -39,10 +44,9 @@ app.use(express.static(path.join(__dirname, '/client/build')));
 app.use(
   session({
     secret: secretKey,
-    store: MongoStore.create(mongoose.connection),
+    store: sessionStore,
     resave: false,
     saveUninitialized: false,
-    cookie: { secure: true },
   })
 );
 
