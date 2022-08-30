@@ -30,24 +30,36 @@ exports.getAdBySearch = async (req, res) => {
 };
 
 exports.addAd = async (req, res) => {
-  const { title, description, date, image, price, location } = sanitize(
-    req.body
-  );
+  const { title, description, date, price, location } = sanitize(req.body);
+  const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
   try {
-    const newAd = new Ad({
-      title: title,
-      description: description,
-      date: date,
-      image: req.file.fileName,
-      price: price,
-      location: location,
-    });
-    await newAd.save();
-    res.json({ message: 'OK' });
-
-    if (req.file) {
-      fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+    if (
+      title &&
+      description &&
+      date &&
+      req.file &&
+      ['/image/png', '/image/jpg', '/image/jpeg', '/image/git'].includes(
+        fileType
+      ) &&
+      price &&
+      location
+    ) {
+      const newAd = new Ad({
+        title: title,
+        description: description,
+        date: date,
+        image: req.file.filename,
+        price: price,
+        location: location,
+      });
+      await newAd.save();
+      res.json(newAd);
+    } else {
+      if (req.file) {
+        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+      }
+      res.status(400).json({ message: 'Bad request' });
     }
   } catch (err) {
     res.status(500).json({ message: err });
@@ -55,26 +67,10 @@ exports.addAd = async (req, res) => {
 };
 
 exports.updateAdById = async (req, res) => {
-  const { title, description, date, photo, price, location, userName } =
-    req.body;
+  const { title, description, date, price, location, userName } = req.body;
   try {
     const ad = await Ad.findById(req.params.id);
     if (ad) {
-      if (!req.file) {
-        await Ad.updateOne(
-          { _id: req.params.id },
-          {
-            $set: {
-              title: title,
-              description: description,
-              date: date,
-              price: price,
-              location: location,
-              userName: req.user.login,
-            },
-          }
-        );
-      }
       await Ad.updateOne(
         { _id: req.params.id },
         {
@@ -89,10 +85,12 @@ exports.updateAdById = async (req, res) => {
           },
         }
       );
-    }
-    res.json({ message: 'OK' });
-    if (req.file) {
-      fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+      res.json(ad);
+    } else {
+      if (req.file) {
+        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+      }
+      return res.status(404).json({ message: 'Not found...' });
     }
   } catch (err) {
     res.status(500).json({ message: err });
