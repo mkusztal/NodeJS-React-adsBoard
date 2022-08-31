@@ -1,5 +1,4 @@
 const Ad = require('../models/ads.model');
-const authMiddleware = require('../utils/authMiddleware');
 const getImageFileType = require('../utils/getImageFileType');
 const sanitize = require('mongo-sanitize');
 const fs = require('fs');
@@ -15,8 +14,10 @@ exports.getAllAds = async (req, res) => {
 exports.getAdById = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
-    if (!ad) res.status(404).json({ message: 'Not found...' });
-    else res.json(ad);
+    if (!ad) {
+      return res.status(404).json({ message: 'Not found...' });
+    }
+    res.json(ad);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -25,8 +26,10 @@ exports.getAdById = async (req, res) => {
 exports.getAdBySearch = async (req, res) => {
   try {
     const ad = await Ad.find({ title: { $regex: /req.params.searchPhrase/ } });
-    if (!ad) res.status(404).json({ message: 'Not found...' });
-    else res.json(ad);
+    if (!ad) {
+      return res.status(404).json({ message: 'Not found...' });
+    }
+    res.json(ad);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -36,18 +39,12 @@ exports.addAd = async (req, res) => {
   const { title, description, date, price, location } = sanitize(req.body);
   const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
+  const isFile =
+    req.file &&
+    ['image/png', 'image/jpg', 'image/jpeg', 'image/git'].includes(fileType);
+
   try {
-    if (
-      title &&
-      description &&
-      date &&
-      req.file &&
-      ['/image/png', '/image/jpg', '/image/jpeg', '/image/git'].includes(
-        fileType
-      ) &&
-      price &&
-      location
-    ) {
+    if (title && description && date && isFile && price && location) {
       const newAd = new Ad({
         title: title,
         description: description,
@@ -55,7 +52,6 @@ exports.addAd = async (req, res) => {
         image: req.file.filename,
         price: price,
         location: location,
-        userName: authMiddleware,
       });
       res.json(newAd);
     } else {
@@ -84,7 +80,6 @@ exports.updateAdById = async (req, res) => {
             image: req.file.filename,
             price: price,
             location: location,
-            userName: authMiddleware,
           },
         }
       );

@@ -5,11 +5,11 @@ const getImageFileType = require('../utils/getImageFileType');
 
 exports.getLoggedUser = async (req, res) => {
   try {
-    if (req.user) {
-      const user = await User.findOne(req.user);
-      if (!ad) res.status(404).json({ message: 'Not found...' });
-      else res.json(user);
-    }
+    const user = await User.findOne(req.user.Login);
+    if (!ad) {
+      return res.status(404).json({ message: 'Not found...' });
+    } 
+     res.json(user);
   } catch (err) {
     res.status(500).json({ message: err });
   }
@@ -20,16 +20,15 @@ exports.register = async (req, res) => {
     const { login, password } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
-    if (
-      login &&
-      typeof login === 'string' &&
-      password &&
-      typeof password === 'string' &&
+    const isLogin = login && typeof login === 'string';
+    const isPassword = password && typeof password === 'string';
+    const isFile =
       req.file &&
-      ['/image/png', '/image/jpg', '/image/jpeg', '/image/git'].includes(
-        fileType
-      )
-    ) {
+      ['image/png', 'image/jpg', 'image/jpeg', 'image/git'].includes(fileType);
+
+    const isDataValid = isLogin && isPassword && isFile;
+
+    if (isDataValid) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
         if (req.file) {
@@ -61,12 +60,11 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   try {
     const { login, password } = req.body;
-    if (
-      login &&
-      typeof login === 'string' &&
-      password &&
-      typeof password === 'string'
-    ) {
+
+    const isLogin = login && typeof login === 'string';
+    const isPassword = password && typeof password === 'string';
+
+    if (isLogin && isPassword) {
       const user = await User.findOne({ login });
 
       if (!user) {
@@ -74,7 +72,6 @@ exports.login = async (req, res) => {
       } else {
         if (bcrypt.compareSync(password, user.password)) {
           req.session.login = user.login;
-          req.session.save();
           res.status(200).json({ message: 'Login successful!' });
         } else {
           res.status(400).json({ message: 'Login or password are incorrect!' });
