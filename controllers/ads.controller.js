@@ -1,5 +1,8 @@
 const Ad = require('../models/ads.model');
+const authMiddleware = require('../utils/authMiddleware');
+const getImageFileType = require('../utils/getImageFileType');
 const sanitize = require('mongo-sanitize');
+const fs = require('fs');
 
 exports.getAllAds = async (req, res) => {
   try {
@@ -52,8 +55,8 @@ exports.addAd = async (req, res) => {
         image: req.file.filename,
         price: price,
         location: location,
+        userName: authMiddleware,
       });
-      await newAd.save();
       res.json(newAd);
     } else {
       if (req.file) {
@@ -67,7 +70,7 @@ exports.addAd = async (req, res) => {
 };
 
 exports.updateAdById = async (req, res) => {
-  const { title, description, date, price, location, userName } = req.body;
+  const { title, description, date, price, location } = req.body;
   try {
     const ad = await Ad.findById(req.params.id);
     if (ad) {
@@ -78,10 +81,10 @@ exports.updateAdById = async (req, res) => {
             title: title,
             description: description,
             date: date,
-            image: req.file.fileName,
+            image: req.file.filename,
             price: price,
             location: location,
-            userName: req.user.login,
+            userName: authMiddleware,
           },
         }
       );
