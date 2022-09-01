@@ -36,15 +36,20 @@ exports.getAdBySearch = async (req, res) => {
 };
 
 exports.addAd = async (req, res) => {
-  const { title, description, date, price, location } = sanitize(req.body);
+  const { title, description, date, price, location, userName } = sanitize(
+    req.body
+  );
   const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
 
   const isFile =
     req.file &&
     ['image/png', 'image/jpg', 'image/jpeg', 'image/git'].includes(fileType);
 
+  const isDataValid =
+    title && description && date && isFile && price && location && userName;
+
   try {
-    if (title && description && date && isFile && price && location) {
+    if (isDataValid) {
       const newAd = new Ad({
         title: title,
         description: description,
@@ -52,6 +57,7 @@ exports.addAd = async (req, res) => {
         image: req.file.filename,
         price: price,
         location: location,
+        userName: userName,
       });
       res.json(newAd);
     } else {
@@ -66,7 +72,7 @@ exports.addAd = async (req, res) => {
 };
 
 exports.updateAdById = async (req, res) => {
-  const { title, description, date, price, location } = req.body;
+  const { title, description, date, price, location, userName } = req.body;
   try {
     const ad = await Ad.findById(req.params.id);
     if (ad) {
@@ -80,6 +86,7 @@ exports.updateAdById = async (req, res) => {
             image: req.file.filename,
             price: price,
             location: location,
+            userName: userName,
           },
         }
       );
