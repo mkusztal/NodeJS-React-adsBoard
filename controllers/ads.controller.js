@@ -59,6 +59,7 @@ exports.addAd = async (req, res) => {
         location: location,
         userName: userName,
       });
+      await newAd.save();
       res.json(newAd);
     } else {
       if (req.file) {
@@ -90,13 +91,14 @@ exports.updateAdById = async (req, res) => {
           },
         }
       );
-      res.json(ad);
     } else {
       if (req.file) {
         fs.unlinkSync(`./public/uploads//${req.file.filename}`);
       }
       return res.status(404).json({ message: 'Not found...' });
     }
+    await ad.save();
+    res.json({ message: 'OK' });§
   } catch (err) {
     res.status(500).json({ message: err });
   }
