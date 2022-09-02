@@ -6,7 +6,7 @@ const imageUpload = require('../utils/imageUpload');
 
 router.get('/ads', AdController.getAllAds);
 router.get('/ads/:id', AdController.getAdById);
-router.get('/api/ads/search/:searchPhrase', AdController.getAdBySearch);
+router.get('/ads/search/:searchPhrase', AdController.getAdBySearch);
 router.post(
   '/ads',
   authMiddleware,

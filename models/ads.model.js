@@ -10,4 +10,5 @@ const adsSchema = new mongoose.Schema({
   userName: { type: String, require: true },
 });
 
+adsSchema.index({ title: 'text' });
 module.exports = mongoose.model('Ad', adsSchema);

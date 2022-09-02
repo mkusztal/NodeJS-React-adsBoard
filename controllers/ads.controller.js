@@ -25,7 +25,7 @@ exports.getAdById = async (req, res) => {
 
 exports.getAdBySearch = async (req, res) => {
   try {
-    const ad = await Ad.find({ title: { $regex: req.params.searchPhrase } });
+    const ad = await Ad.find({ $text: { $search: req.params.searchPhrase } });
     if (!ad) {
       return res.status(404).json({ message: 'Not found...' });
     }

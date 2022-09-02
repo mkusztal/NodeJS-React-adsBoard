@@ -22,6 +22,8 @@ mongoose.connect(uriDB, {
   useUnifiedTopology: true,
 });
 
+mongoose.set('useCreateIndex', true);
+
 const sessionStore = MongoStore.create({
   mongoUrl: uriDB,
   collection: 'sessions',
