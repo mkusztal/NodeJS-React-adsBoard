@@ -25,7 +25,7 @@ exports.getAdById = async (req, res) => {
 
 exports.getAdBySearch = async (req, res) => {
   try {
-    const ad = await Ad.find({ title: { $regex: /req.params.searchPhrase/ } });
+    const ad = await Ad.find({ title: { $search: req.params.searchPhrase } });
     if (!ad) {
       return res.status(404).json({ message: 'Not found...' });
     }
@@ -63,7 +63,7 @@ exports.addAd = async (req, res) => {
       res.json(newAd);
     } else {
       if (req.file) {
-        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
       }
       res.status(400).json({ message: 'Bad request' });
     }
@@ -91,14 +91,13 @@ exports.updateAdById = async (req, res) => {
           },
         }
       );
+      res.json(ad);
     } else {
       if (req.file) {
-        fs.unlinkSync(`./public/uploads//${req.file.filename}`);
+        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
       }
       return res.status(404).json({ message: 'Not found...' });
     }
-    await ad.save();
-    res.json({ message: 'OK' });§
   } catch (err) {
     res.status(500).json({ message: err });
   }
