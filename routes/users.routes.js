@@ -5,7 +5,6 @@ const userController = require('../controllers/users.controller');
 const imageUpload = require('../utils/imageUpload');
 
 router.get('/auth/user', userController.getLoggedUser);
-router.get('/user', authMiddleware, userController.getUser);
 router.post(
   '/auth/register',
   imageUpload.single('avatar'),

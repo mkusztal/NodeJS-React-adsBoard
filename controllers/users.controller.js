@@ -4,14 +4,11 @@ const fs = require('fs');
 const getImageFileType = require('../utils/getImageFileType');
 
 exports.getLoggedUser = async (req, res) => {
+  const { login } = req.body;
   try {
-    const user = await User.findOne(req.user.Login);
-    if (!ad) {
-      return res.status(404).json({ message: 'Not found...' });
-    } 
-     res.json(user);
+    res.json({ message: 'You logged: ' + login });
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -53,7 +50,7 @@ exports.register = async (req, res) => {
       res.status(400).json({ message: 'Bad request' });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -72,7 +69,7 @@ exports.login = async (req, res) => {
       } else {
         if (bcrypt.compareSync(password, user.password)) {
           req.session.login = user.login;
-          res.status(200).json({ message: 'Login successful!' });
+          res.status(200).json({ message: 'Login successful ' + login });
         } else {
           res.status(400).json({ message: 'Login or password are incorrect!' });
         }
@@ -81,7 +78,7 @@ exports.login = async (req, res) => {
       res.status(400).json({ message: 'Bad request' });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -89,10 +86,6 @@ exports.logout = async (req, res) => {
   try {
     req.session.destroy();
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
-};
-
-exports.getUser = async (req, res) => {
-  res.json({ message: 'You logged!' });
 };

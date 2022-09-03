@@ -7,7 +7,7 @@ exports.getAllAds = async (req, res) => {
   try {
     res.json(await Ad.find());
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -19,7 +19,7 @@ exports.getAdById = async (req, res) => {
     }
     res.json(ad);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -31,7 +31,7 @@ exports.getAdBySearch = async (req, res) => {
     }
     res.json(ad);
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -68,7 +68,7 @@ exports.addAd = async (req, res) => {
       res.status(400).json({ message: 'Bad request' });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -91,7 +91,7 @@ exports.updateAdById = async (req, res) => {
           },
         }
       );
-      res.json(ad);
+      res.json({ message: 'OK' });
     } else {
       if (req.file) {
         fs.unlinkSync(`./public/uploads/${req.file.filename}`);
@@ -99,18 +99,19 @@ exports.updateAdById = async (req, res) => {
       return res.status(404).json({ message: 'Not found...' });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
 
 exports.removeAdById = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
+    Ż``;
     if (ad) {
       await Ad.deleteOne({ _id: req.params.id });
       res.json({ message: 'Ok' });
     }
   } catch (err) {
-    res.status(500).json({ message: err });
+    res.status(500).json({ message: err.message });
   }
 };
