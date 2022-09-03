@@ -4,7 +4,7 @@ const fs = require('fs');
 const getImageFileType = require('../utils/getImageFileType');
 
 exports.getLoggedUser = async (req, res) => {
-  const { login } = req.body;
+  const { login } = req.user;
   try {
     res.json('You logged: ' + login);
   } catch (err) {
