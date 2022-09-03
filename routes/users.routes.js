@@ -4,7 +4,7 @@ const authMiddleware = require('../utils/authMiddleware');
 const userController = require('../controllers/users.controller');
 const imageUpload = require('../utils/imageUpload');
 
-router.get('/auth/user', userController.getLoggedUser);
+router.get('/auth/user', authMiddleware, userController.getLoggedUser);
 router.post(
   '/auth/register',
   imageUpload.single('avatar'),

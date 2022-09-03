@@ -106,7 +106,6 @@ exports.updateAdById = async (req, res) => {
 exports.removeAdById = async (req, res) => {
   try {
     const ad = await Ad.findById(req.params.id);
-    Ż``;
     if (ad) {
       await Ad.deleteOne({ _id: req.params.id });
       res.json({ message: 'Ok' });
