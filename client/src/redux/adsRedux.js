@@ -14,7 +14,7 @@ const REMOVE_AD = createActionName('REMOVE_AD');
 const SEARCH_AD = createActionName('SEARCH_AD');
 
 // action creators
-// const addAd = (payload) => ({ type: ADD_AD, payload });
+//const addAd = (payload) => ({ type: ADD_AD, payload });
 const updateAdById = (payload) => ({ type: UPDATE_AD, payload });
 // const removeAdById = (id) => ({ type: REMOVE_AD, payload: { id } });
 // const getAdBySearch = (searchPhrase) => ({

@@ -23,7 +23,7 @@ const HomePage = () => {
           <h1>All ads</h1>
         </Col>
         <Col className="d-flex flex-row-reverse p-2">
-          <Link to="/ads/addForm">
+          <Link to="/ad/addForm">
             <Button>Add ad</Button>
           </Link>
         </Col>

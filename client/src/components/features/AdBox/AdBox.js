@@ -12,7 +12,7 @@ const AdBox = ({ _id, title, image, price, location }) => {
           <Card.Text>Location: {location}</Card.Text>
           <Card.Text>Price: {price}$</Card.Text>
         </div>
-        <Row>
+        <Row className="pt-3 pl-3">
           <Link to={'/ad/' + _id}>
             <Button variant="primary">Read more</Button>
           </Link>

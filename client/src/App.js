@@ -12,6 +12,7 @@ import Search from './components/features/Search/Search';
 import Register from './components/features/Register/Register';
 import Login from './components/features/Login/Login';
 import Logout from './components/features/Logout/Logout';
+import AddAdForm from './components/features/AddAdForm/AddAdForm';
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/ad/:id" element={<Ad />} />
+        <Route path="/ad/addForm/" element={<AddAdForm />} />
         <Route path="/ad/edit/:id" element={<AdEdit />} />
         <Route path="/ad/remove/:id" element={<AdRemove />} />
         <Route path="/search/:searchPhrase" element={<Search />} />

@@ -33,7 +33,7 @@ const Login = () => {
           dispatch(logIn({ login }));
           setTimeout(() => {
             navigate('/');
-          }, 2000);
+          }, 1000);
         } else if (res.status === 400) {
           setStatus('clientError');
         } else {
