@@ -1,4 +1,5 @@
 import { API_URL } from '../config';
+import initialState from './initialState';
 import shortid from 'shortid';
 
 // selectors
@@ -13,8 +14,6 @@ const REMOVE_AD = createActionName('REMOVE_AD');
 const SEARCH_AD = createActionName('SEARCH_AD');
 
 // action creators
-// const getAllAds = (ads) => ({ type: GET_ADS, payload: ads });
-// const getAdById = (id) => ({ type: GET_AD, payload: id });
 // const addAd = (payload) => ({ type: ADD_AD, payload });
 const updateAdById = (payload) => ({ type: UPDATE_AD, payload });
 // const removeAdById = (id) => ({ type: REMOVE_AD, payload: { id } });
@@ -23,28 +22,26 @@ const updateAdById = (payload) => ({ type: UPDATE_AD, payload });
 //   payload: { searchPhrase },
 // });
 
-export const fetchData = () => {
+export const fetchAds = () => {
   return (dispatch) => {
-    fetch(API_URL + 'api/ads')
+    fetch(API_URL + '/ads')
       .then((res) => res.json())
-      .then((ad) => dispatch(updateAdById(ad)));
+      .then((ads) => dispatch(updateAdById(ads)));
   };
 };
 
-const adsReducer = (statePart = [], action) => {
+const adsReducer = (state = initialState, action = {}) => {
   switch (action.type) {
     case ADD_AD:
-      return [...statePart, { ...action.payload, id: shortid() }];
+      return [...state, { ...action.payload, id: shortid() }];
     case UPDATE_AD:
-      return statePart.map((ad) =>
-        ad.id === action.payload.id ? { ...ad, ...action.payload } : ad
-      );
+      return [...action.payload];
     case REMOVE_AD:
-      return statePart.filter((ad) => ad.id !== action.payload);
+      return state.filter((ad) => ad.id !== action.payload);
     case SEARCH_AD:
-      return statePart.filter((ad) => ad.title.includes(action.payload));
+      return state.filter((ad) => ad.title.includes(action.payload));
     default:
-      return statePart;
+      return state;
   }
 };
 

@@ -1,11 +1,20 @@
 import { Col, Row, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getAds } from '../../../redux/adsRedux';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 
 import AdBox from '../../features/AdBox/AdBox';
+import { fetchAds } from '../../../redux/adsRedux';
+
 const HomePage = () => {
   const ads = useSelector(getAds);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAds());
+  }, [dispatch]);
 
   return (
     <div>
@@ -18,13 +27,13 @@ const HomePage = () => {
             <Button>Add ad</Button>
           </Link>
         </Col>
-        <Row>
-          {ads.map((ad) => (
-            <Col key={ad._id}>
-              <AdBox {...ad} />
-            </Col>
-          ))}
-        </Row>
+      </Row>
+      <Row>
+        {ads.map((ad) => (
+          <Col key={ad._id}>
+            <AdBox {...ad} />
+          </Col>
+        ))}
       </Row>
     </div>
   );
