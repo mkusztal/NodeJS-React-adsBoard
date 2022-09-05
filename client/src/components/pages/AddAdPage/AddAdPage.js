@@ -10,18 +10,18 @@ const AddAdPage = () => {
 
   const handleSubmit = (ad) => {
     dispatch(addAd);
-    const formData = new FormData();
-    formData.append('title', ad.title);
-    formData.append('username', ad.username);
-    formData.append('description', ad.description);
-    formData.append('date', ad.date);
-    formData.append('image', ad.image);
-    formData.append('price', ad.price);
-    formData.append('location', ad.location);
+    const fd = new FormData();
+    fd.append('title', ad.title);
+    fd.append('username', ad.username);
+    fd.append('description', ad.description);
+    fd.append('date', ad.date);
+    fd.append('image', ad.image);
+    fd.append('price', ad.price);
+    fd.append('location', ad.location);
 
     const options = {
       method: 'POST',
-      body: formData,
+      body: fd,
     };
 
     fetch(`${API_URL}/ads`, options);

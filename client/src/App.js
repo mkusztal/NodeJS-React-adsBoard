@@ -5,14 +5,14 @@ import Home from './components/pages/Home/HomePage';
 import Header from './components/layout/Header/Header';
 import NotFound from './components/pages/NotFound/NotFoundPage';
 import Footer from './components/layout/Footer/Footer';
-import Ad from './components/features/Ad/Ad';
+import AdPage from './components/pages/AdPage/AdPage';
+import AddAdPage from './components/pages/AddAdPage/AddAdPage';
 import AdEdit from './components/features/AdEditForm/AdEdit';
 import AdRemove from './components/features/AdRemove/AdRemove';
 import Search from './components/features/Search/Search';
 import Register from './components/features/Register/Register';
 import Login from './components/features/Login/Login';
 import Logout from './components/features/Logout/Logout';
-import AddAdPage from './components/pages/AddAdPage/AddAdPage';
 
 const App = () => {
   return (
@@ -20,7 +20,7 @@ const App = () => {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/ad/:id" element={<Ad />} />
+        <Route path="/ad/:id" element={<AdPage />} />
         <Route path="/ad/addAd/" element={<AddAdPage />} />
         <Route path="/ad/edit/:id" element={<AdEdit />} />
         <Route path="/ad/remove/:id" element={<AdRemove />} />

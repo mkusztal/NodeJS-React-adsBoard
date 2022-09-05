@@ -4,7 +4,7 @@ import shortid from 'shortid';
 
 // selectors
 export const getAds = ({ ads }) => ads;
-export const getAd = ({ ads }, adId) => ads.find((ad) => ad._id === adId);
+export const getAdById = ({ ads }, adId) => ads.find((ad) => ad._id === adId);
 
 // actions
 const createActionName = (actionName) => `app/ads/${actionName}`;
