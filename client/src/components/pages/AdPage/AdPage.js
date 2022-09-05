@@ -1,9 +1,9 @@
 import { Card, Row, Button, Col } from 'react-bootstrap';
-import { useState } from 'react';
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
 //import { IMAGES_URL } from '../../../config';
 import DeleteAd from '../../features/DeleteAd/DeleteAd';
-import { getAdById, removeAdById } from '../../../redux/adsRedux';
+import { getAdById, removeAdById, fetchAds } from '../../../redux/adsRedux';
 import { useSelector, useDispatch } from 'react-redux';
 
 const AdPage = () => {
@@ -13,6 +13,10 @@ const AdPage = () => {
   console.log('adData: ', adData);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAds());
+  }, [dispatch]);
 
   const [showModal, setShowModal] = useState(false);
   const handleShow = () => setShowModal(true);
@@ -33,7 +37,7 @@ const AdPage = () => {
       />
     );
 
-  if (!adData) return <Navigate to="/" />;
+  //if (!adData) return <Navigate to="/" />;
 
   return (
     <Row className="d-flex justify-content-center">

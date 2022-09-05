@@ -4,7 +4,7 @@ import { IMAGES_URL } from '../../../config';
 
 const AdBox = ({ _id, title, image, price, location }) => {
   return (
-    <Card>
+    <Card >
       <Card.Img variant="top" src={IMAGES_URL + image} />
       <Card.Body>
         <div>

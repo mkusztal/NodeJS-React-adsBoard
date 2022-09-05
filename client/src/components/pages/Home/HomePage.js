@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import AdBox from '../../features/AdBox/AdBox';
 import { fetchAds } from '../../../redux/adsRedux';
+import SearchForm from '../../features/SearchForm/SearchForm';
 
 const HomePage = () => {
   const ads = useSelector(getAds);
@@ -29,6 +30,9 @@ const HomePage = () => {
         </Col>
       </Row>
       <Row>
+        <SearchForm />
+      </Row>
+      <Row >
         {ads.map((ad) => (
           <Col key={ad._id}>
             <AdBox {...ad} />
