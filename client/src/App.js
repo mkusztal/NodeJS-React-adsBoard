@@ -6,13 +6,13 @@ import Header from './components/layout/Header/Header';
 import NotFound from './components/pages/NotFound/NotFoundPage';
 import Footer from './components/layout/Footer/Footer';
 import Ad from './components/features/Ad/Ad';
-import AdEdit from './components/features/AdEdit/AdEdit';
+import AdEdit from './components/features/AdEditForm/AdEdit';
 import AdRemove from './components/features/AdRemove/AdRemove';
 import Search from './components/features/Search/Search';
 import Register from './components/features/Register/Register';
 import Login from './components/features/Login/Login';
 import Logout from './components/features/Logout/Logout';
-import AddAdForm from './components/features/AddAdForm/AddAdForm';
+import AddAdPage from './components/pages/AddAdPage/AddAdPage';
 
 const App = () => {
   return (
@@ -21,7 +21,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/ad/:id" element={<Ad />} />
-        <Route path="/ad/addForm/" element={<AddAdForm />} />
+        <Route path="/ad/addAd/" element={<AddAdPage />} />
         <Route path="/ad/edit/:id" element={<AdEdit />} />
         <Route path="/ad/remove/:id" element={<AdRemove />} />
         <Route path="/search/:searchPhrase" element={<Search />} />
