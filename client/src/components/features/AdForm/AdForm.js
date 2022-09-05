@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getUser } from '../../../redux/userRedux';
 
-const AddAdForm = ({ action, actionText, ...props }) => {
+const AdForm = ({ action, actionText, ...props }) => {
   const newDate = new Date();
   const user = useSelector(getUser);
 
@@ -107,4 +107,4 @@ const AddAdForm = ({ action, actionText, ...props }) => {
   );
 };
 
-export default AddAdForm;
+export default AdForm;
