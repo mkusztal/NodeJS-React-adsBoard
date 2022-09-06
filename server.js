@@ -39,7 +39,7 @@ db.on('error', (err) => {
   console.log('Error: ', err);
 });
 
-app.use(cors());
+app.use(cors({ credentials: true, origin: 'http://localhost:3000' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, '/client/build')));
@@ -60,9 +60,9 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname + '/client/build/index.html'));
-// });
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'));
+});
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found...' });

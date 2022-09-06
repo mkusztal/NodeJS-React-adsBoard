@@ -1,8 +1,10 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
-//import styles from './navbar.module.scss';
+import { getUser } from '../../../redux/userRedux';
 
 const NavBar = () => {
+  const user = useSelector(getUser);
   return (
     <Navbar
       bg="secondary"
@@ -16,12 +18,23 @@ const NavBar = () => {
           <Nav.Link as={NavLink} to="/">
             Home
           </Nav.Link>
-          <Nav.Link as={NavLink} to="/register">
-            Register
-          </Nav.Link>
-          <Nav.Link as={NavLink} to="/login">
-            Login
-          </Nav.Link>
+          {!user && (
+            <Nav.Link as={NavLink} to="/register">
+              Register
+            </Nav.Link>
+          )}
+
+          {!user && (
+            <Nav.Link as={NavLink} to="/login">
+              Login
+            </Nav.Link>
+          )}
+
+          {user && (
+            <Nav.Link as={NavLink} to="/logout">
+              Logout
+            </Nav.Link>
+          )}
         </Nav>
       </Container>
     </Navbar>

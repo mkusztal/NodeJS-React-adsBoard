@@ -5,6 +5,7 @@ import shortid from 'shortid';
 // selectors
 export const getAds = ({ ads }) => ads;
 export const getAdById = ({ ads }, adId) => ads.find((ad) => ad._id === adId);
+export const searchInputValue = (state) => state.searchInput;
 
 // actions
 const createActionName = (actionName) => `app/ads/${actionName}`;
@@ -19,10 +20,10 @@ export const addAd = (payload) => ({ type: ADD_AD, payload });
 export const editAd = (payload) => ({ type: EDIT_AD, payload });
 export const updateAdById = (payload) => ({ type: UPDATE_AD, payload });
 export const removeAdById = (id) => ({ type: REMOVE_AD, payload: { id } });
-// const getAdBySearch = (searchPhrase) => ({
-//   type: SEARCH_AD,
-//   payload: { searchPhrase },
-// });
+export const getAdBySearch = (searchPhrase) => ({
+  type: SEARCH_AD,
+  payload: { searchPhrase },
+});
 
 export const fetchAds = () => {
   return (dispatch) => {

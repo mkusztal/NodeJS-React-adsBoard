@@ -9,7 +9,7 @@ import AdPage from './components/pages/AdPage/AdPage';
 import AddAdPage from './components/pages/AddAdPage/AddAdPage';
 import EditAdPage from './components/pages/EditAdPage/EditAdPage';
 import AdRemove from './components/features/AdRemove/AdRemove';
-import Search from './components/features/Search/Search';
+import SearchForm from './components/features/SearchForm/SearchForm';
 import Register from './components/features/Register/Register';
 import Login from './components/features/Login/Login';
 import Logout from './components/features/Logout/Logout';
@@ -24,7 +24,7 @@ const App = () => {
         <Route path="/ad/addAd/" element={<AddAdPage />} />
         <Route path="/ad/edit/:id" element={<EditAdPage />} />
         <Route path="/ad/remove/:id" element={<AdRemove />} />
-        <Route path="/search/:searchPhrase" element={<Search />} />
+        <Route path="/search/:searchPhrase" element={<SearchForm />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/logout" element={<Logout />} />

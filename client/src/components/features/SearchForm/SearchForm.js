@@ -1,18 +1,37 @@
 import { Row, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAdBySearch, searchInputValue } from '../../../redux/adsRedux';
 
 const SearchForm = () => {
-  return (
-    <Row className="mx-auto m-3">
-      <Form.Group className="mb-3 mr-3" controlId="formSearch">
-        <Form.Control type="text" placeholder="Search..." />
-      </Form.Group>
+  const dispatch = useDispatch();
+  const currentSearchInput = useSelector(searchInputValue);
+  const [searchInput, setSearchInput] = useState(currentSearchInput);
 
-      <Button className="h-75">
-        <FontAwesomeIcon icon={faSearch} />
-      </Button>
-    </Row>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(getAdBySearch({ searchInput }));
+  };
+
+  return (
+    <Form className="mx-auto m-3" onSubmit={handleSubmit}>
+      <Row>
+        <Form.Group className="mb-3 mr-3" controlId="formSearch">
+          <Form.Control
+            type="text"
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            placeholder="Search..."
+          />
+        </Form.Group>
+
+        <Button className="h-75">
+          <FontAwesomeIcon icon={faSearch} />
+        </Button>
+      </Row>
+    </Form>
   );
 };
 

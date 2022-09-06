@@ -4,9 +4,11 @@ import { useParams, Link } from 'react-router-dom';
 //import { IMAGES_URL } from '../../../config';
 import DeleteAd from '../../features/DeleteAd/DeleteAd';
 import { getAdById, removeAdById, fetchAds } from '../../../redux/adsRedux';
+import { getUser } from '../../../redux/userRedux';
 import { useSelector, useDispatch } from 'react-redux';
 
 const AdPage = () => {
+  const user = useSelector(getUser);
   const { adId } = useParams();
   const adData = useSelector((state) => getAdById(state, adId));
 
@@ -54,14 +56,18 @@ const AdPage = () => {
         </Card>
       </Col>
       <Col xs={12} lg="2">
-        <Link to={'/ad/edit/' + adData._id}>
-          <Button variant="outline-info" className="m-2">
-            Edit
-          </Button>{' '}
-        </Link>
-        <Button variant="outline-danger" onClick={handleShow}>
-          Delete
-        </Button>{' '}
+        {user && (
+          <Link to={'/ad/edit/' + adData._id}>
+            <Button variant="outline-info" className="m-2">
+              Edit
+            </Button>{' '}
+          </Link>
+        )}
+        {user && (
+          <Button variant="outline-danger" onClick={handleShow}>
+            Delete
+          </Button>
+        )}
       </Col>
     </Row>
   );
