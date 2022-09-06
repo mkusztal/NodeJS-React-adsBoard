@@ -18,6 +18,8 @@ const Logout = () => {
   fetch(`${API_URL}/auth/logout`, options).then(() => {
     dispatch(logOut());
   }, dispatch);
+
+  return null;
 };
 
 export default Logout;
