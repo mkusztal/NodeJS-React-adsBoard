@@ -2,11 +2,9 @@ import AdForm from '../../features/AdForm/AdForm';
 import { addAd, fetchAds } from '../../../redux/adsRedux';
 import { useDispatch } from 'react-redux';
 import { API_URL } from '../../../config';
-import { useNavigate } from 'react-router-dom';
 
 const AddAdPage = () => {
   const dispatch = useDispatch();
-  let navigate = useNavigate();
 
   const handleSubmit = (ad) => {
     dispatch(addAd);
@@ -22,12 +20,12 @@ const AddAdPage = () => {
     const options = {
       method: 'POST',
       body: fd,
+      credentials: 'include',
+      contentType: 'application/json',
     };
 
     fetch(`${API_URL}/ads`, options);
     dispatch(fetchAds);
-
-    navigate('/');
   };
   return <AdForm action={handleSubmit} actionText="Add ad" />;
 };

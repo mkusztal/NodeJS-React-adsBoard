@@ -2,13 +2,12 @@ import { Row, Button, Form } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getAdBySearch, searchInputValue } from '../../../redux/adsRedux';
+import { useDispatch } from 'react-redux';
+import { getAdBySearch } from '../../../redux/adsRedux';
 
 const SearchForm = () => {
   const dispatch = useDispatch();
-  const currentSearchInput = useSelector(searchInputValue);
-  const [searchInput, setSearchInput] = useState(currentSearchInput);
+  const [searchInput, setSearchInput] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
