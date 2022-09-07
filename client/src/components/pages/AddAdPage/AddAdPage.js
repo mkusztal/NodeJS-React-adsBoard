@@ -10,7 +10,7 @@ const AddAdPage = () => {
     dispatch(addAd);
     const fd = new FormData();
     fd.append('title', ad.title);
-    fd.append('username', ad.username);
+    fd.append('username', ad.userName);
     fd.append('description', ad.description);
     fd.append('date', ad.date);
     fd.append('image', ad.image);
@@ -19,14 +19,15 @@ const AddAdPage = () => {
 
     const options = {
       method: 'POST',
-      body: fd,
       credentials: 'include',
+      body: fd,
       contentType: 'application/json',
     };
 
     fetch(`${API_URL}/ads`, options);
     dispatch(fetchAds);
   };
+
   return <AdForm action={handleSubmit} actionText="Add ad" />;
 };
 

@@ -32,7 +32,7 @@ const HomePage = () => {
       <Row>
         <SearchForm />
       </Row>
-      <Row >
+      <Row>
         {ads.map((ad) => (
           <Col key={ad._id}>
             <AdBox {...ad} />

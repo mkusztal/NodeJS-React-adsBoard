@@ -3,13 +3,13 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { logOut } from '../../../redux/userRedux';
 import { useEffect } from 'react';
-//import { useEffect } from 'react';
 
 const Logout = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const options = {
     method: 'DELETE',
+    credentials: 'include',
   };
   useEffect(() => {
     fetch(`${API_URL}/auth/logout`, options).then(() => {

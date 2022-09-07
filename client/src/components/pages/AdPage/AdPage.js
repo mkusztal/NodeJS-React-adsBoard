@@ -1,7 +1,7 @@
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-//import { IMAGES_URL } from '../../../config';
+import { IMAGES_URL } from '../../../config';
 import DeleteAd from '../../features/DeleteAd/DeleteAd';
 import { getAdById, removeAdById, fetchAds } from '../../../redux/adsRedux';
 import { getUser } from '../../../redux/userRedux';
@@ -9,8 +9,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const AdPage = () => {
   const user = useSelector(getUser);
-  const { adId } = useParams();
-  const adData = useSelector((state) => getAdById(state, adId));
+  const { id } = useParams();
+  const adData = useSelector((state) => getAdById(state, id));
 
   console.log('adData: ', adData);
 
@@ -26,7 +26,7 @@ const AdPage = () => {
 
   const handleRemove = (e) => {
     e.preventDefault();
-    dispatch(removeAdById(adId));
+    dispatch(removeAdById(id));
     handleClose();
   };
 
@@ -45,7 +45,7 @@ const AdPage = () => {
     <Row className="d-flex justify-content-center">
       <Col xs={12} lg="5">
         <Card>
-          {/* <Card.Img variant="top" src={IMAGES_URL + adData.image} /> */}
+          <Card.Img variant="top" src={IMAGES_URL + adData.image} />
           <Card.Body>
             <div>
               <Card.Title>{adData.title}</Card.Title>

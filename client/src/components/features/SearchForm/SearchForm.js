@@ -11,7 +11,7 @@ const SearchForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getAdBySearch({ searchInput }));
+    dispatch(getAdBySearch(searchInput));
   };
 
   return (
@@ -26,7 +26,7 @@ const SearchForm = () => {
           />
         </Form.Group>
 
-        <Button className="h-75">
+        <Button className="h-75" type="submit">
           <FontAwesomeIcon icon={faSearch} />
         </Button>
       </Row>

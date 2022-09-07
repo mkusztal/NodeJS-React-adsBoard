@@ -5,7 +5,7 @@ import { getUser } from '../../../redux/userRedux';
 import { useNavigate } from 'react-router-dom';
 
 const AdForm = ({ action, actionText, ...props }) => {
-  //const newDate = new Date();
+  const newDate = new Date();
   const user = useSelector(getUser);
   let navigate = useNavigate();
 
@@ -13,18 +13,19 @@ const AdForm = ({ action, actionText, ...props }) => {
   const [title, setTitle] = useState(props.title || '');
   const [username, setUsername] = useState(props.username || '');
   const [description, setDescription] = useState(props.description || '');
-  //const [date, setDate] = useState(props.date || newDate);
+  const [date, setDate] = useState(props.date || newDate);
   const [image, setImage] = useState(props.image || '');
   const [price, setPrice] = useState(props.price || '');
   const [location, setLocation] = useState(props.location || '');
 
+  console.log(date);
   const handleSubmit = () => {
     action({
       id,
       title,
-      username: user.login,
+      userName: user.login,
       description,
-
+      date: newDate,
       image,
       price,
       location,
@@ -32,7 +33,7 @@ const AdForm = ({ action, actionText, ...props }) => {
 
     navigate('/');
   };
-  //date: newDate,
+
   return (
     <Form className="col-12 col-sm-6 mx-auto" onSubmit={handleSubmit}>
       <h1 className="my-4">Add your ad</h1>
@@ -74,10 +75,14 @@ const AdForm = ({ action, actionText, ...props }) => {
         />
       </Form.Group>
 
-      {/* <Form.Group className="mb-3" controlId="formDate">
+      <Form.Group className="mb-3" controlId="formDate">
         <Form.Label>Date</Form.Label>
-        <Form.Control type="date" onChange={(e) => setDate(e.target.date)} />
-      </Form.Group> */}
+        <Form.Control
+          type="date"
+          value={date}
+          onChange={(e) => setDate(e.target.date)}
+        />
+      </Form.Group>
 
       <Form.Group className="mb-3" controlId="formPrice">
         <Form.Label>Price</Form.Label>
