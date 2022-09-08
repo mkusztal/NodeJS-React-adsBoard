@@ -1,6 +1,7 @@
 import { Col, Row, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { getAds } from '../../../redux/adsRedux';
+import { getUser } from '../../../redux/userRedux';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 
@@ -10,6 +11,7 @@ import SearchForm from '../../features/SearchForm/SearchForm';
 
 const HomePage = () => {
   const ads = useSelector(getAds);
+  const user = useSelector(getUser);
 
   const dispatch = useDispatch();
 
@@ -24,9 +26,11 @@ const HomePage = () => {
           <h1>All ads</h1>
         </Col>
         <Col className="d-flex flex-row-reverse p-2">
-          <Link to="/ad/addAd">
-            <Button>Add ad</Button>
-          </Link>
+          {user && (
+            <Link to="/ad/addAd">
+              <Button>Add ad</Button>
+            </Link>
+          )}
         </Col>
       </Row>
       <Row>

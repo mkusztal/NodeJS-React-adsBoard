@@ -11,7 +11,7 @@ const AdForm = ({ action, actionText, ...props }) => {
 
   const id = props.id;
   const [title, setTitle] = useState(props.title || '');
-  const [username, setUsername] = useState(props.username || '');
+  const [username, setUsername] = useState(props.userName || '');
   const [description, setDescription] = useState(props.description || '');
   const [date, setDate] = useState(props.date || newDate);
   const [image, setImage] = useState(props.image || '');
@@ -33,6 +33,8 @@ const AdForm = ({ action, actionText, ...props }) => {
 
     navigate('/');
   };
+
+  const dateValid = date && date.toISOString().substring(0, 10);
 
   return (
     <Form className="col-12 col-sm-6 mx-auto" onSubmit={handleSubmit}>
@@ -75,14 +77,16 @@ const AdForm = ({ action, actionText, ...props }) => {
         />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="formDate">
-        <Form.Label>Date</Form.Label>
-        <Form.Control
-          type="date"
-          value={date}
-          onChange={(e) => setDate(e.target.date)}
-        />
-      </Form.Group>
+      {dateValid && (
+        <Form.Group className="mb-3" controlId="formDate">
+          <Form.Label>Date</Form.Label>
+          <Form.Control
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.date)}
+          />
+        </Form.Group>
+      )}
 
       <Form.Group className="mb-3" controlId="formPrice">
         <Form.Label>Price</Form.Label>

@@ -1,6 +1,6 @@
 import { Card, Row, Button, Col } from 'react-bootstrap';
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Navigate } from 'react-router-dom';
 import { IMAGES_URL } from '../../../config';
 import DeleteAd from '../../features/DeleteAd/DeleteAd';
 import { getAdById, removeAdById, fetchAds } from '../../../redux/adsRedux';
@@ -39,7 +39,7 @@ const AdPage = () => {
       />
     );
 
-  //if (!adData) return <Navigate to="/" />;
+  if (!adData) return <Navigate to="/" />;
 
   return (
     <Row className="d-flex justify-content-center">

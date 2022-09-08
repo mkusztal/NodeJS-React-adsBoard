@@ -85,6 +85,7 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
   try {
     req.session.destroy();
+    res.json({ message: 'OK' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
