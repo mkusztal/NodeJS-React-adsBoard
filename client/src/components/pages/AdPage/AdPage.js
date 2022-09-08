@@ -49,10 +49,10 @@ const AdPage = () => {
           <Card.Body>
             <div>
               <Card.Title>{adData.title}</Card.Title>
-              <Card.Text>Username: {adData.userName}$</Card.Text>
-              <Card.Text>Description: {adData.description}$</Card.Text>
-              <Card.Text>Image: {adData.image}$</Card.Text>
-              <Card.Text>Date: {adData.date}$</Card.Text>
+              <Card.Text>Username: {adData.userName}</Card.Text>
+              <Card.Text>Description: {adData.description}</Card.Text>
+              <Card.Text>Image: {adData.image}</Card.Text>
+              <Card.Text>Date: {adData.date}</Card.Text>
               <Card.Text>Price: {adData.price}$</Card.Text>
               <Card.Text>Location: {adData.location}</Card.Text>
             </div>

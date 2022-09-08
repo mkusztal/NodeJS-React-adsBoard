@@ -18,7 +18,6 @@ const AdForm = ({ action, actionText, ...props }) => {
   const [price, setPrice] = useState(props.price || '');
   const [location, setLocation] = useState(props.location || '');
 
-  console.log(date);
   const handleSubmit = () => {
     action({
       id,
@@ -34,7 +33,9 @@ const AdForm = ({ action, actionText, ...props }) => {
     navigate('/');
   };
 
-  const dateValid = date && date.toISOString().substring(0, 10);
+  console.log(date);
+
+  const convertedDate = date && date.toISOString().substring(0, 10);
 
   return (
     <Form className="col-12 col-sm-6 mx-auto" onSubmit={handleSubmit}>
@@ -48,7 +49,6 @@ const AdForm = ({ action, actionText, ...props }) => {
           placeholder="Enter title"
         />
       </Form.Group>
-
       <Form.Group className="mb-3" controlId="formUsername">
         <Form.Label>Username</Form.Label>
         <Form.Control
@@ -58,7 +58,6 @@ const AdForm = ({ action, actionText, ...props }) => {
           placeholder="Username"
         />
       </Form.Group>
-
       <Form.Group className="mb-3" controlId="formDescription">
         <Form.Label>Description</Form.Label>
         <Form.Control
@@ -68,7 +67,6 @@ const AdForm = ({ action, actionText, ...props }) => {
           placeholder="Description"
         />
       </Form.Group>
-
       <Form.Group className="mb-3" controlId="formImage">
         <Form.Label>Image</Form.Label>
         <Form.Control
@@ -76,17 +74,14 @@ const AdForm = ({ action, actionText, ...props }) => {
           onChange={(e) => setImage(e.target.files[0])}
         />
       </Form.Group>
-
-      {dateValid && (
-        <Form.Group className="mb-3" controlId="formDate">
-          <Form.Label>Date</Form.Label>
-          <Form.Control
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.date)}
-          />
-        </Form.Group>
-      )}
+      <Form.Group className="mb-3" controlId="formDate">
+        <Form.Label>Date</Form.Label>
+        <Form.Control
+          type="date"
+          value={convertedDate}
+          onChange={(e) => setDate(e.target.date)}
+        />
+      </Form.Group>
 
       <Form.Group className="mb-3" controlId="formPrice">
         <Form.Label>Price</Form.Label>
@@ -97,7 +92,6 @@ const AdForm = ({ action, actionText, ...props }) => {
           placeholder="Price"
         />
       </Form.Group>
-
       <Form.Group className="mb-3" controlId="formLocation">
         <Form.Label>Location</Form.Label>
         <Form.Control
@@ -107,7 +101,6 @@ const AdForm = ({ action, actionText, ...props }) => {
           placeholder="Location"
         />
       </Form.Group>
-
       <Button variant="primary" type="submit">
         Submit
       </Button>
