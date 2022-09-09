@@ -11,7 +11,7 @@ const AdForm = ({ action, actionText, ...props }) => {
 
   const id = props.id;
   const [title, setTitle] = useState(props.title || '');
-  const [username, setUsername] = useState(props.userName || '');
+  const [userName, setUserName] = useState(props.userName || '');
   const [description, setDescription] = useState(props.description || '');
   const [date, setDate] = useState(props.date || newDate);
   const [image, setImage] = useState(props.image || '');
@@ -53,8 +53,8 @@ const AdForm = ({ action, actionText, ...props }) => {
         <Form.Label>Username</Form.Label>
         <Form.Control
           type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={userName}
+          onChange={(e) => setUserName(e.target.value)}
           placeholder="Username"
         />
       </Form.Group>
