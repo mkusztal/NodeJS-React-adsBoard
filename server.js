@@ -4,7 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const MongoStore = require('connect-mongo');
 const session = require('express-session');
-require('dotenv/config');
+require('dotenv').config({ path: './.env' });
 
 const ads = require('./routes/ads.routes');
 const users = require('./routes/users.routes');
