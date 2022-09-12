@@ -12,7 +12,7 @@ const Logout = () => {
     credentials: 'include',
   };
   useEffect(() => {
-    fetch(`${API_URL}/auth/logout`, options).then(() => {
+    fetch(`${API_URL}api/auth/logout`, options).then(() => {
       dispatch(logOut());
       navigate('/');
     }, dispatch);

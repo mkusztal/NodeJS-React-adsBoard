@@ -26,7 +26,7 @@ const Login = () => {
     };
 
     setStatus('loading');
-    fetch(`${API_URL}/auth/login`, options)
+    fetch(`${API_URL}api/auth/login`, options)
       .then((res) => {
         if (res.status === 200) {
           setStatus('success');

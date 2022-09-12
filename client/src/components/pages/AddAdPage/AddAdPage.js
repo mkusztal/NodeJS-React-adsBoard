@@ -26,7 +26,7 @@ const AddAdPage = () => {
       contentType: 'application/json',
     };
 
-    fetch(`${API_URL}/ads`, options);
+    fetch(`${API_URL}api/ads`, options);
     dispatch(fetchAds);
 
     navigate('/');
